@@ -1330,3 +1330,156 @@ console.log(typeof pers1); //Returns object
 console.log(typeof pers1.fullName); //Returns function
 console.log(typeof pers1.fullName()); // Returns String
 
+//Spread Operator
+
+//Expand any iterable such as a string or array into an array 
+//For passing multiple arguments to method
+//The syntax for spread operator uses ellipsis symbol (...)
+//Always on the right side of the equal to
+//IE was not supporting Spread Operator 
+
+
+//String to Array
+let stringdata2 = "String";
+
+let stringdata3 = [...stringdata2]; //Copy, convert and store each character as a element in the array
+
+console.log(stringdata3);
+
+//Copy an Array
+
+let arr = [0,1,2,3,4,5];
+
+let arr2 = [...arr]; //Copy and make exact replica of the source array
+
+console.log(arr2, "Copied array"); //Returns 0,1,2,3,4,5
+
+arr2.push(8); //Add an element to the last of the array
+
+let arr3 = arr.slice(0); //it also copies the array
+
+console.log(arr3); //Returns 0,1,2,3,4,5
+
+console.log(arr); //After making changes to the new array, original array wont get affected. It returns 0,1,2,3,4,5
+
+console.log(arr2); //Returns 0,1,2,3,4,5,8
+
+let _products = [
+    {
+        "productID" : 680,
+        "name" : "Ferrari",
+        "product Number": "FR-320-100",
+        "color" : "Red",
+        "standardCost" : 10934.23,
+        "listPrice" : 21234.32,   
+    },
+    {
+        "productID" : 650,
+        "name" : "Hyundai",
+        "product Number": "HR-410-200",
+        "color" : "White",
+        "standardCost" : 1534.23,
+        "listPrice" : 2232.32,
+    },
+    {
+        "productID" : 900,
+        "name" : "Spike",
+        "product Number": "Sk-000-000",
+        "color" : "Green",
+        "standardCost" : 934,
+        "listPrice" : 1234,
+    }
+];
+
+//Copy Object Array
+
+let diff = [..._products]; //Array is copied
+
+console.log(diff);
+
+//But careful with Object Array
+//Even though the array is copied, the underlying objects are still accessed 
+
+//Modifying the property of the Array
+diff[0].productID = 0;
+
+//It affects the original value and it also get changed with it
+console.log(_products[0].productID); //Returns 0
+
+//The original value is lost somewhere and new value is stored in both variables
+console.log(diff[0].productID); //Returns 0
+
+//Since objects work like pointers, any changes made to the Objects affect the original value and original value will be lost completely
+//Only the changed value will be stored as a new value
+
+//Concatenate two arrays
+
+let arr4 = [0,1,2,3,4];
+
+let arr5 = [5,6,7,8];
+
+let arr6 = arr4.concat(arr5);
+
+console.log(arr6); //Returns 0,1,2,3,4,5,6,7,8
+console.log(arr6.length);  //Returns 9
+
+//Concatenation can also be done with spread operator
+
+let arr7 = [...arr4,...arr5];
+
+console.log(arr7); //Returns 0,1,2,3,4,5,6,7,8
+console.log(arr7.length); //Returns 9
+
+//Spread in constructor
+//Helps in Objects that where we pass in multiple values to the constructor
+
+let dt2 = new Date(2019,10,5);
+
+console.log(dt2); //Returns Tue Nov 05 2019 00:00:00 GMT+0530 (IST)
+
+let dateFields = [2019,10,5];
+
+console.log(new Date(...dateFields)); //Returns Tue Nov 05 2019 00:00:00 GMT+0530 (IST)
+
+//Spread function arguments
+
+//In Apply method we pass serveral parameters (Here we can use spread since it requires an array)
+
+function multipleParams(arg1, arg2, arg3){
+    console.log(arg1,arg2,arg3);
+}
+
+multipleParams(1,2,3); //1-2-3
+
+let args = [4,5,6];
+
+//Multiple parameters can be passed easily with spread operator
+multipleParams(...args); //4-5-6
+
+//Shallow copy on object literals
+//Shallow copy is the collection of copy of the collection structure not the elements
+//Copy property by property one object to the other
+
+let pers3 = {
+    firstName : 'Perinban',
+    lastName : 'Parameshwaran',
+    age : '25'
+}
+
+let pers4 = {...pers3}; //Copied successfully 
+
+console.log(pers4); //Returns same as pers3
+
+//Modifying the Pers4 object
+pers4.age = 30; 
+
+//It does not affect the original pers3 object and made changes only to the pers4
+console.log(pers3.age); //Returns 25
+
+console.log(pers4.age); //Returns 30
+
+//Filter out duplicates from Array
+
+let arr8 = [0,1,2,3,4,5,3,4];
+
+console.log([...new Set(arr8)]); //Returns 0,1,2,3,4,5
