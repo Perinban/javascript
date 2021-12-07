@@ -1,3 +1,4 @@
+'use strict';
 //Document Object Model - DOM ( Modifying the Web Page / Getting the events from the User )
 
 function showMessage(message){
@@ -57,3 +58,9 @@ const containers = document.getElementsByClassName('container');
 
 //Hide an container
 containers[2].classList.add('d-none');
+
+//Pass this from eventHandler
+function eventHandler(ctl){
+    ctl.style.background = 'Yellow';
+    console.log(ctl.toString()); //Pass the message from event OnClick; Returns object HTMLButtonElement
+}

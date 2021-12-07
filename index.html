@@ -120,7 +120,7 @@
                     <h4>Trail Review</h4>
                     <div>Asphalt</div>
                     <div>National Park</div>
-                    <a id="see-review" class="btn btn-default">See Review</a>
+                    <a id="see-review" class="btn btn-default" onclick="this.style.background='Green'">See Review</a>
                 </div>
             </div>
         </div>
@@ -131,6 +131,9 @@
         </div>
 
     </div>
+
+    <button onclick="this.style.background='Red'">In Event Handler</button>
+    <button onclick="eventHandler(this)"> Pass the function to Event Handler</button>
 
     <!-- FOOTER -->
     <footer class="d-flex justify-content-stretch">

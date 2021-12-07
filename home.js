@@ -112,7 +112,6 @@ showMessage(saved2); //It will not display anything. It can be viewed in console
 showMessage(typeof saved2); //Null will be returned as object
 showMessage(typeof saved3); //Undefined will be returned as undefined
 
-
 //Object
 let person = {
     firstName : "Perinban",
@@ -227,8 +226,7 @@ if(true){
     variable2 = 'no';
 }
 
-showMessage(variable2); //The value passed inside the block passed outside the block and it returns no as the output.
-
+showMessage(variable2); //The value passed passed outside the block and it returns no as the output incase of var.
 
 //For loop
 //Consists of three parts: Initailisation, Condition check, Incrementation/Decrementation
@@ -397,7 +395,6 @@ let person4 = {
 showMessage(person4[mySymbol]); //Returns Secret Information
 
 //Code which has access to Symbol property only can access the data
-
 
 //Methods
 //Methods are functions that can be attached to Objects 
@@ -1101,3 +1098,235 @@ try{
 catch(error){
     handleError(error);
 }
+
+//Object Data Types
+//new Boolean, new Number, new String
+//Use the primitive 'boolean', 'number', 'string' instead of object data types
+//Because Object data types take up more memory space and slower to access
+
+//All Object Data Types inherit from Object (not primitives)
+//Object has Constructive Property
+//Returns a reference to an object itself
+
+
+let introDate = new Date();
+let strValue = new String()
+let stringdata = 'Hello';
+
+//For primitives, it can cast into Object and make use of Constructor Property
+console.log("Primitive String = " + stringdata.constructor.toString()); //It calls a String function which returns the type String
+console.log("introDate = " + introDate.constructor.toString());
+console.log("Str Value = " + strValue.constructor.toString() );
+
+//Constructor provides the internal representation of the particular object
+
+let introDate2 = new Date();
+let result10;
+let value17 = null;
+
+//To check whether it is date
+
+console.log("introDate: " + isDate(introDate2));
+
+function isDate(date){
+    return date.constructor.toString().indexOf("Date") > -1;
+}
+
+//To check whether if null or not
+
+console.log("result = " +isNUllOrUndefined(result10) ? 'null/undefined' : ' not null');
+
+function isNUllOrUndefined(value){
+    return value === null || value === undefined;
+}
+
+//instanceOf
+//Tests if inherited from Object Data Type ( Not Primtive )
+//Test a specific type of object or Object itself
+
+let dt = new Date();
+let name4 = new String("Product Name"); //Initialise String Object and Store product Name
+let name5 = 'Instance';
+let nulldata = null;
+
+console.log(name4); //Returns Each character of the String in each array element
+
+console.log((dt instanceof Date).toString()); //Returns True [ dt was created from an Object Date ]
+console.log((name4 instanceof String).toString() ); //Returns True
+console.log((name5 instanceof String).toString()); //Primtive Data Type cannot be an instance. So, it returns false
+console.log((name5 instanceof Object).toString()); //Returns False. Primitive Data types were not objects
+
+console.log(typeof null); //Returns Object
+//console.log((nulldata instanceof null).toString()); //Eventhough null type returned as object, it is not an object. So, it would throw an error if tried to find instance for the null
+console.log((null instanceof Object).toString()); //Returns False. Since null is not an instance of the object
+
+//This Keyword
+//Refers to an Object
+//That Object which is currently running is said to be called with this keyword
+//There are some exceptions that the sometimes objects can be changed
+
+//Javascript is running within the Global Window Object
+
+console.log(this.toString()); //Returns Objects Window
+
+let person8 = {
+    firstName : 'Perinban',
+    lastName : 'Parameshwaran',
+    age : 25,
+    fullName : function(){
+        console.log(this.toString()); //Returns Object Object since it is an Object Literal
+        return this.firstName + ' ' + this.lastName;
+    }
+}
+
+//Here this is the Person Object Literal
+//Object Literal is a comma separated list of name-value pairs inside of curly braces
+//Those values can be properties or functions.
+
+console.log(person8.fullName() + " Person 8"); //Prints Full Name of the Function
+
+//Constructor Function
+
+function Person9(first,last){
+    console.log(this.toString(), "Person9"); //Returns Object Object
+    this.firstName = first;
+    this.lastName = last;
+    console.log(this.firstName, "From Object");
+    this.fullName = function(){  //This is executed only when the function is called
+        console.log(this.toString(), "Person9"); //Returns Object Object
+        return this.firstName + " " + this.lastName;
+    }
+}
+
+let p1 = new Person9("John", "Snow");
+let p2 = new Person9("Bob", "Smith");
+
+//Here this refers to the Current Object. For first line, it would point to p1 and then to p2 object.
+
+//console.log(Person9.fullName()); //Returns fullName is not a function
+console.log(p1.fullName());  //Returns Full Name 
+
+console.log(p2.fullName());  //Returns Full Name
+
+console.log(p1.lastName); //Returns Last Name
+
+//this keyword
+//Different value based on execution context
+//In a method: Owner Object
+//In a function : Global Object or Window Object
+//In a event : Element that received the event
+//Call()/Apply() Methods refers to the Objects that passed in
+//'use strict' also affects this keyword
+
+//Global Scope - 'this' is mapped to global/window object
+console.log("Begin:Glocal Scope");
+console.log(this.toString());
+console.log("this === window = " + (this === window).toString());
+console.log("End Global Scope");
+
+//If we use this keyword with 'use strict', it would trigger an error that this is Undefined
+//With use strict, we cannnot declare this in the function Scope
+function functionScope(){
+    console.log("Function Scope Begin");
+//    console.log(this.toString());
+    console.log(this); //Returns Undefined since use strict is used at the Top
+    console.log("this === window = " + (this === window).toString());
+    //If you want to get the global window object when 'use strict' is in effect, use below statement
+    console.log(window.toString()); //Returns Object Window
+    console.log("End Function Scope");
+}
+
+functionScope();
+
+//this - object literal
+
+let product3 = {
+    productID : 680,
+    name : 'Ferrari',
+    standardCost : 112427,
+    listPrice : 123445,
+    calculateGrossProfit : function(){
+        return (this.listPrice - this.standardCost) //this grabs the object literal Property data value to the methods
+            .toLocaleString('en-US',{
+                style: 'currency', currency: 'USD'
+            });
+    }
+};
+
+console.log(product3.calculateGrossProfit());
+
+let product4 = {
+    standardCost : 14415,
+    listPrice : 43562
+}
+
+console.log("Call Method");
+
+console.log(product3.calculateGrossProfit.call(product3)); //This will be instance of product3
+//this will do product3.listPrice - product3.standardCost
+
+console.log(product3.calculateGrossProfit.call(product4)); //This will be an instance of product4
+//this will do product4.listPrice - product4.standardCost
+
+console.log(product3); //original is preserved as such
+
+console.log(product4); //Original is preserved as such
+
+console.log("Apply Method");
+
+//Apply works the exact same way of call. But here we can pass parameters as arrays to the particular method
+
+console.log(product3.calculateGrossProfit.apply(product3));
+
+console.log(product3.calculateGrossProfit.apply(product4));
+
+console.log(product3); //Original Values are retained
+
+console.log(product4); //Original Values are retained
+
+//Call() method takes arguments separately
+//Apply() method takes arguments as an array - it should be an array
+
+const person10 = {
+    fullName : function(city,country){
+        return this.firstName + " " + this.lastName + " " + city + " " + country
+    }
+}
+
+const personDetails = {
+    firstName : "Sam",
+    lastName : "Dorman"
+}
+
+//Below is the difference between Call and Apply
+console.log(person10.fullName.apply(personDetails, ["chennai", "india"]));
+
+console.log(person10.fullName.call(personDetails, "chennai", "india"));
+
+//this in Constructor function
+
+function person11(first,last){
+    this.firstName = first,
+    this.lastName = last,
+    this.fullName = function(){
+        return this.firstName + " " + this.lastName;
+    }
+}
+
+//Creation of instance pers1
+let pers1 = new person11("Sam", "Thompson");
+//Creation of instance pers2
+let pers2 = new person11("Wills", "Williamon");
+
+console.log(pers1 instanceof person11, "Instance"); //Returns true
+
+console.log(pers1);
+console.log(pers2);
+
+console.log(pers1.fullName); //Returns function
+console.log(pers1.fullName()); //Returns the execution of the function
+
+console.log(typeof pers1); //Returns object
+console.log(typeof pers1.fullName); //Returns function
+console.log(typeof pers1.fullName()); // Returns String
+
