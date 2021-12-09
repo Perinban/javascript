@@ -64,3 +64,24 @@ function eventHandler(ctl){
     ctl.style.background = 'Yellow';
     console.log(ctl.toString()); //Pass the message from event OnClick; Returns object HTMLButtonElement
 }
+
+//Validate Regular Expression
+function validateRegExp(expression, text){
+
+    let validateExp = expression.test(text);
+    console.log(validateExp);
+
+    if(validateExp)
+    {
+        console.log(expression.exec(text));
+        if(expression.exec(text).length > 1)
+        showMessage("Possibility of Regular Expression Passed to Test Case is more than One");
+        else
+        showMessage(expression.exec(text)[0]);
+    }
+    else
+    {
+        showMessage('Invalid Regular Expression Matched to Test Case');
+    }
+
+}

@@ -1483,3 +1483,243 @@ console.log(pers4.age); //Returns 30
 let arr8 = [0,1,2,3,4,5,3,4];
 
 console.log([...new Set(arr8)]); //Returns 0,1,2,3,4,5
+
+//Regular Expressions
+
+//Creation of regular Expression Literal
+
+let re = /ab+c/; //One way to create regular expression
+
+let re2 = new RegExp('ab+c'); //Another way to create regular expression
+
+//exec() -> Executes a search for a match in a string. It returns an array of information or null if mismacth
+
+let myRe =  /d(b+)d/g;
+
+let myArray = myRe.exec("cdbbdbsbz");
+
+console.log(myArray); //Returns ["dbbd", "bb"]
+
+//If do not need to access the properties of regular expression, use the below 
+
+let myArray2 = /d(b+)d/g.exec('cdbbdbsbz'); //Returns the same result
+
+console.log(myArray2);
+
+//Using Object
+
+let myRe2 = new RegExp('d(b+)d','g');
+
+let myArray3 = myRe2.exec('cdbbdbsbz');
+
+console.log(myArray3); //Returns same result
+
+//Validation of Color Hex
+
+//The Pattern for Hex color code
+//It generally starts with an # and an 6 digit color code starts from A-F or 0-9
+
+// [] -> Square brackers can be used to group a range of acceptable characters
+
+// Forward slashes generally indicate the delimiters that indicate start and end of the expression
+
+//An example) # AB 02 34 - Hex code generally starts with an  hash and AB indicates Red, 02 indicates Blue and 34 indicates Green
+
+let myRe3 = /#[ABCDEF0123456789]/;
+
+let myArray4 = myRe3.exec("#AB1234");
+
+//test -> Tests for match in a string. It returns true or false
+let myRegValidate = myRe3.test("#AB1234")
+
+console.log(myArray4); //It returns #A which indicates the logic only for the first character alone but we should be validating all the character
+console.log(myRegValidate); //Returns true since it appears to be in a string
+
+//There are three basic quantifier characters
+// ? (question mark) -> meaning match - 0 or 1 times
+// * (asterisk) -> meaning match 0 or more times
+// + (plus characters) -> meaning match 1 or more times
+
+//In our case, it should match 1 or more times, so we go with + character
+
+//validateRegExp -> Declared in utils.js
+
+validateRegExp(/#[ABCDEF0123456789]+/,"#ABCDEF");  //Returns true and [#ABCDEF]
+
+//Instead of writing all the charater which makes a lengthier regular expression, we can simplify the expression by grouping
+validateRegExp(/#[A-F0-9]+/,"#ABCDEF"); //Returns true and returns the same result
+//Note if we are going to group it should be an sequential characters
+
+//What if we forgot to mention an hash. To make the hash as optional, we have to add ? mark to the hash
+// ? -> Represents it is optional
+validateRegExp(/#?[A-F0-9]+/,"ABCDEF"); //Returns True and required value ABCDEF
+
+//It validates all the character now
+//But for a proper hex code, the hex should be 3 or 6 character only
+//Here it validates all the character and returns the true and value
+
+validateRegExp(/#?[A-F0-9]+/,"#ABCDEF55124567145"); //Validates and return as true which is a wrong one
+validateRegExp(/#?[A-F0-9]+/,"#AB"); //This is also an invalid hex code
+
+//To fix this, we can use curly braces
+// {} -> denotes that the how many characters we are going to match
+
+validateRegExp(/#?[A-F0-9]{6}/,"#AB"); //Returns False since it is not an valid Hex code
+
+// 3 characters is also a valid hex character
+
+validateRegExp(/#?[A-F0-9]{6}/,"#ABC"); //It is throwing an error which is an wrong one
+
+//To fix this, we can use pipe characters
+// | -> which denotes or and collectively consider both the expressions as matches
+
+validateRegExp(/#?[A-F0-9]{6}|[A-F0-9]{3}/,"#ABC"); //It is considered as true but it returns only ABC where hash is missing in second case
+//Hash should be an common for both
+//To fix this, we can group the regular expression using paranthesis
+// () -> used to group the regular expression which will be available common for both
+
+validateRegExp(/#?([A-F0-9]{6}|[A-F0-9]{3})/,"#ABC"); //Returns true and two results ABC and #ABC both were correct
+//Braces have secondary function. Sub pattern is now added as match array so we return two results.
+
+//Lower case is also a valid hex number
+validateRegExp(/#?([A-F0-9]{6}|[A-F0-9]{3})/,"abc"); //Returns Invalid Regular Expression
+
+//To fix this, either we can add lower case to the condition or irrespectively exclude case condition
+
+validateRegExp(/#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})/,"abcd"); //For this case, it considers the first 3 characters and take as valid input
+//Returns true with abc
+
+//Second way is to add pattern modifier to the regular expression, this will make the character insensitive
+
+validateRegExp(/#?([A-F0-9]{6}|[A-F0-9]{3})/i,"abc"); //Returns true and abc as result
+
+//Regular expression search for the string until it finds out the exact match
+
+validateRegExp(/#?([A-F0-9]{6}|[A-F0-9]{3})/i,"test abc"); //This returns true and abc as result which is not a correct way
+
+//To fix this,
+//We need to anchor the regular expression
+//Tell it to start match at the very beginning of the input and very end of the input
+// ^ will anchor at the very beginning of the input
+// $ will anchor at the very end of the input
+
+validateRegExp(/^#?([A-F0-9]{6}|[A-F0-9]{3})$/i,"abcd"); //This returns false and how it should exactly work
+
+//What if we got some whitespace
+validateRegExp(/^#?([A-F0-9]{6}|[A-F0-9]{3})$/i,"  abc   "); //This returns false but it should be true
+
+//To eliminate the whitespace
+//Shorthande code \s* used to eliminate all type of spaces
+validateRegExp(/^\s*#?([A-F0-9]{6}|[A-F0-9]{3})\s*$/i, "    abc     "); //Returns true and abc as the output
+//It is suggested to trim spaces before passing the characters to the regular expression in Javascript itself
+
+
+//Basic Syntax
+/*
+?*+{#} Quantifiers
+[...] Character ranges
+\s Shorthand character codes
+(...|...) Grouping and alternation
+^...$ Anchors
+i Modifiers
+*/
+
+//Character Classes - Can list one or more character classes
+// []
+// [abcdef] - can give individual characters
+// [a-f] - can give dash character ie) Sequence of Character
+// We can invert the character classs by adding caret(^)
+// [^abcdef] - other than abcdef
+
+
+validateRegExp(/^\s*#?([^g-z]{6}|[^g-z]{3})\s*$/i,"      abc "); //Returns true and abc as the ouptut
+
+//If we want to use literal dash for comparison it should be either in first or last in matching expression
+
+let myRe4 = /[--/a-z0-9]/;
+
+//Caret character
+//It should be given at end - It would be treated as literal
+
+let myRe5 = /[A-Za-z^]/;
+
+//Brackets character - Simplest way to escape them with backtick
+
+let myRe6 = /[A-Z\[]/;
+
+//Wildcard
+// . (dot)
+//dot will match anything except new line character
+//When using dot in character class, it loses its special meaning and just will be worked as plain dot
+// .(dot) + Quantifier = will make the process very slow
+
+//Other Quantifiers
+// {n} - exactly n times
+// {n,} - n or more times (unlimited)
+// {n,m} - between n and m times
+// {,m} - between 0 and m times same as {0,m}. It is always better to use {0,m}
+
+//Regex will start to match from left to right
+//Using negating character class will speed up the regular expression while brack tracking
+//It is better than using dot wildcard in combination with the quantifier 
+
+// Example - /<a[^>]+>strings<\/a>/
+//Repetition limit is in the order of 2 billion for regular expression
+
+//Always keep left most branch as most desire one
+// | (pipe) alteration will take the lowest precendance as important
+//Here so we kept 6 at the beginning and 3rd at the end since it takes first as always important
+//ie) For six letters, it also has 3 letters so it will first take that 3 letters as match and close the output in some processers
+validateRegExp(/^\s*#?([^g-z]{6}|[^g-z]{3})\s*$/i,"abcdef"); //Returns true and abc as the output
+
+//Matching with Ip adress
+
+let ipaddr = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]{1,2})/;
+//First will match with 250 to 255
+//Second will match with 200 to 249
+//Third will match anything between 0 to 199
+//Literal dot and a complete pattern to match three imes
+//For last one, we need to repeat it without the dot
+
+validateRegExp(ipaddr,"192.189.2.2"); //Returns True
+
+validateRegExp(ipaddr,"258.189.2.2"); //Returns False
+
+/*Match Array
+[0] - Complete Match
+[1] - Match against sub pattern 1
+[2] - Match against sub pattern 2
+[3] - Match against sub pattern 3
+and so on
+*/ 
+
+//Submatch order will be determined by the order of the paranthesis
+
+let test2 = /(abc)+((d[e]*f)?123){2}/;
+
+//Here 3 paranthesis were there, which means three sub groups will be created
+
+// \b is a word boundary like first and last of the word
+
+//Backslash escaping
+//Remove special meaning from meta-charaters
+//Give special meaning to ordinary characters
+
+//For example)
+/*
+ [  ] ( ) | . ? * + { } ^ $ \ / (delimiter)
+ These special meaning will be turned to literals if used with backslash
+ \[
+*/
+
+//Anything which we put between \Q and \E will be considered as literal and it will not interpreted by regex compiler
+// $regex = '\b\Q' + $validated + '\E\b';
+
+//Another way
+// $regex = '\b' + re.quote( $validated ) + '\b'; //quote is a special function
+
+//Javascript does not have escape characters
+
+function escapeInputString (str){
+    return str.replace(/[[\]\/\\{}()|?+^$*.-]/g, "\\$&");
+}
