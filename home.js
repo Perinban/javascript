@@ -1155,8 +1155,8 @@ console.log((dt instanceof Date).toString()); //Returns True [ dt was created fr
 console.log((name4 instanceof String).toString() ); //Returns True
 console.log((name5 instanceof String).toString()); //Primtive Data Type cannot be an instance. So, it returns false
 console.log((name5 instanceof Object).toString()); //Returns False. Primitive Data types were not objects
-
 console.log(typeof null); //Returns Object
+
 //console.log((nulldata instanceof null).toString()); //Eventhough null type returned as object, it is not an object. So, it would throw an error if tried to find instance for the null
 console.log((null instanceof Object).toString()); //Returns False. Since null is not an instance of the object
 
@@ -1723,3 +1723,314 @@ let test2 = /(abc)+((d[e]*f)?123){2}/;
 function escapeInputString (str){
     return str.replace(/[[\]\/\\{}()|?+^$*.-]/g, "\\$&");
 }
+
+//Template Literal
+
+//Template literal is called as string literal in javascript
+//Make all the strings into a single string
+//Change quotes to backticks
+//Add interoplation to variables with dollar sign and curly braces
+//In Template literal, how we sent the data in the same format the data gets printed including newline, spaces
+//Also, you can add symbols inside template literal
+
+let person12 = {
+    firstName : "Sam",
+    lastName : "Billy"
+};
+
+function person13(message){
+    //return "My Name is "+ person12.firstName +  " " +  person12.lastName;  //Instead of long text
+    console.log(`My Name is
+${"MR." + person12.firstName}
+${person12.lastName}`); //In the same format, the data will be printed in console
+    return String.raw `My Name is ${person12.firstName} ${person12.lastName} \t`; //It can be changed with template literal
+}
+
+showMessage(person13(message));
+
+//\t is interpreted as special character in HTML.
+//\t is used to create tabs in HTML
+//Infront of template literal, if we use String.raw it could print as such
+//After adding String.raw, \t is printed in the output
+//String.raw takes the complete string of the template literal and renders it raw including any escape and special characters
+//String.raw is actually a tag for the template literal
+//We call it a tag because the template literal is now tagged with a function
+//Tag acts as a pre-rendering function
+//Infront of template only tag can be added
+
+function person14(message){
+    //return "My Name is "+ person12.firstName +  " " +  person12.lastName;  //Instead of long text
+    console.log(`My Name is
+${"MR." + person12.firstName}
+${person12.lastName}`); //In the same format, the data will be printed in console
+    //Only one item can be tagged before string literal
+    //So, have removed String.raw
+    return highlightText `My Name is <br>${person12.firstName} <br>${person12.lastName} \t`; //It can be changed with template literal
+}
+
+//strings and values are the combination of the Template Literal
+//Normal strings will come with strings and interpolation values will come as values
+//Always strings count will be higher than values
+//So, we are using i-1 for values
+function highlightText(strings, ...values){
+    let str = '';
+    console.log(strings); //Returns ["My Name is ", " ", " \t"]
+    console.log(values); //Returns ["Sam", "Billy"]
+    for(let i = 0; i<strings.raw.length; i++ ){
+        if(i>0){
+            str += `<b>${values[i-1]}</b>`;
+            //Since we have used innerHTML, line breaks in the template literal wont be working
+            //So, if we really need line breaks, we can make use of <br> tags. 
+        }
+        //strings array has a raw function which is similar to String.raw
+        //Also we cannot pass raw to the values
+        //It is added to print \t
+        str += strings.raw[i];
+    }
+    return str; //Now it prints My Name is Sam Billy \t
+}
+
+showMessage(person14(message));
+
+//Object.freeze
+const arr9 = [0,1,2];
+
+arr9[0] = 22; //Even though it is declared as const, the contents in the const array can be changed
+
+showMessage(arr9);
+
+//To not to make any change of the value, we should use object.freeze
+
+const arr10 = Object.freeze([0,1,2]);
+
+//arr10[0] = 22; //This line is pretty useless. No changes will be happened
+//arr10[1] = 45;
+
+showMessage(arr10); //Returns 0,1,2
+
+//Destructuring Syntax
+
+let arr11 = [0,1,2,3,4];
+
+/*
+let a = arr11[0];
+let b = arr11[1];
+let c = arr11[2];
+let d = arr11[3];
+let e = arr11[4];
+*/
+
+//When the index is higher, it could be really hard and assign to each values
+//Hard to maintain
+//Also, we need to make sure that manually entered index is correct or not
+//To fix, we can make use of destructuring syntax
+
+//let[a, b, c, d, e] = arr11; //Destructuring syntax
+
+//For more readbility, it can be declared in separate line as well
+
+let[
+    a,
+    b,
+    c,
+    d,
+    e
+    ] = arr11; //This will still work and produce the same result
+
+console.log(a.toString() + b + c + d + e); //If one is converted to string, all the other variables will work as string
+                                           //Return 01234
+
+
+//It is not mandatory to always match the count of left and right side (variables and no.of values) in Destructuring Syntax
+
+let arr12 = [0,1,2,3,4,5];
+
+let [a1,b1,c1,d1] = arr12;
+
+console.log(a1.toString() + b1 + c1 + d1 ); //Returns 0,1,2,3
+//How many variables were given, the respective value will be assigned
+
+//This wont abort the process
+let arr13 = [0,1,2,3];
+
+let [a2, b2, c2, d2, e2, f2] = arr13;
+
+//For the additional variables, undefined will be assigned automatically
+//Whatever there, it will take, for not matching ones it will take assigned
+
+console.log( a2.toString() + b2 + c2 + d2 + e2 + f2 );
+
+let arr14 = [0,1,2,3];
+
+let [] = arr14; //This wont throw an error but nothing will be assigned
+
+let arr15;
+
+//let [a3,b3,d3] = arr15; //This will throw an error undefined is not an object. -> Here we cannot assign it
+
+//console.log(a3 + b3 + d3);
+
+//If I dont know the length of the array or the array value is more
+//We can declare like below
+
+let arr16 = [0,1,2,3,4,5,6,7];
+
+let [a3,b3,d3,...moreargs] = arr16; //All the remaining will be stored as array in moreargs
+
+console.log(moreargs); //This will return 3,4,5,6,7
+
+//Also, we can enter default value, incase value is not there, it will take the default value
+
+let arr17 = [0,1,2];
+
+let [a4,
+    b4,
+    c4,
+    d4 = 3] = arr17;
+
+console.log(a4.toString() + b4 + c4 + d4); //Returns 0,1,2,3
+
+//Also, we can deconstruct objects
+ 
+let person15 = {
+    firstName : 'William',
+    lastName : 'Clinton'
+}
+
+let {firstName: temp_a, lastName: temp_b} = person15; //firstName will be stored in temp_a and lastName will be stored in temp_b
+
+console.log(temp_a + " " + temp_b); //Returns William Clinton
+
+//It is not mandatory to give new variable name
+
+let person16 = {
+    firstName : 'Sam',
+    lastName : 'Anderson'
+}
+
+//let {firstName, lastName} = person16;
+
+//console.log(firstName + " " + lastName); //Returns Sam Anderson
+
+//Also, we can assign default values
+
+let person17 = {
+    firstName : "David",
+    lastName : 'Clark'
+}
+
+//Same property name should be passed in destructuring object.  Otherwise it will return as Undefined
+let {temp_c, lastName, temp_e = 25} = person17;
+
+console.log(temp_c + " " + lastName + " is " + temp_e); //For Temp_c it is return as Undefined
+
+//To search a string in a text, string.search() is not an optimized solution
+//Suppose if we know for a person doctor, he/she will use the abbreviation only at the beginning as dr
+//For MD, it will be always at end.
+//For this cases, startsWith(), endsWith() and includes() can be used for better optimum results than string.search()
+
+function searchString(...message){
+
+    for(let i = 0; i < message.length; i++){
+        message[i] = message[i].trim().toLowerCase(); //Trimmed and Converted to Lower Case for Data availability
+        if(message[i].startsWith("dr")){
+            showMessage("Doctor"); //Executes for Dr Ram
+            console.log("Doctor");
+        }
+        else if(message[i].endsWith("md")){
+            showMessage("Doctor of Medicine"); //Executes for Sam MD
+            console.log("Doctor of Medicine");
+        }
+        else if(message[i].includes("house")){
+            showMessage("Nice House"); //Executes for This house is great
+            console.log("Nice House");
+        }
+        else{
+            showMessage('Unmatching Sentence');
+        }
+    }
+
+}
+
+searchString("Dr Ram", "Sam MD","This house is great"); //Passed multiple values and captured as array to test multiple values at a single time
+
+//startsWith, endsWith and includes does not work with SwitchCase statement
+
+//Numbers - Safe Integer
+//When we are using large numbers, because of the inside round of numbers, we will lose up the data.
+
+//For example,
+console.log(9007199254740992 + 1); //Returns 9007199254740992
+//1 wont be added because of the internal mechanism
+
+//Until the number falls between Max safe integer, we wont be facing any issues
+console.log(Number.MAX_SAFE_INTEGER); //Returns 9007199254740991
+
+console.log(Number.MIN_SAFE_INTEGER); //Returns -9007199254740991
+
+//To verify this, we can make use of Number.isSafeInteger function
+
+console.log(Number.isSafeInteger(98)); //Returns True
+
+console.log(Number.isSafeInteger(9007199254740992)); //Returns False
+
+//This is similar to the Number.isInteger function
+//Checks whether the given number is integer or not
+
+console.log(Number.isInteger(25)); //Returns True
+
+console.log(Number.isInteger(25.3)); //Returns False
+
+console.log(Number.isInteger(Infinity)); //Returns False
+
+console.log(Number.isInteger(false)); //Returns False
+
+console.log(Number.isInteger(25.0)); //25.0 is similar to 25. So, it returns True
+
+console.log(Number.isInteger("")); //Empty string is not an integer. So, it returns false
+
+//Symbol
+//Symbol is a primitive data type that can be used as a identifier for object properties
+//Symbols are globally unique unguessable values
+
+let id = Symbol("My id");
+
+console.log(id); //Returns Symbol(My Id)
+
+console.log(typeof id); //Returns Symbol
+
+console.log(id.toString()); //Converts Symbol to String and print Symbol(My Id) as the output
+
+//You cannot see a value that is stored inside because it is always hidden to us
+//Symbol is not the value of the symbol
+
+let id2 = Symbol("My id");
+
+console.log(id === id2); //Returns False since both were unique
+//Whenever we create a symbol, it will new and unique value
+
+//But we can reuse the same Symbol again using Symbol.for
+
+let id3 = Symbol.for("My id");
+let id4 = Symbol.for("My id");
+
+console.log(id3 === id4); //Returns true
+//These were the same symbols retrived from the global registry
+
+//Symbols in Object
+let loan = {
+    name : "Barry",
+    [Symbol.for("income")]: 15000
+}
+
+//To access the property of the Symbol,
+
+console.log(loan[Symbol.for('income')]); //Returns 15000
+
+//When we query the properties of the Symbol, it wont shown up
+
+console.log(Object.getOwnPropertyNames(loan)); //Returns only Name
+//Basically Symbol is completely hidden
+
+//To find it,
+console.log(Object.getOwnPropertySymbols(loan)); //Returns Symbol(income)

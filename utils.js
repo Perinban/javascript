@@ -2,8 +2,10 @@
 //Document Object Model - DOM ( Modifying the Web Page / Getting the events from the User )
 
 function showMessage(message){
-    document.getElementById('message').textContent = message;
+    //document.getElementById('message').textContent = message;
+    document.getElementById('message').innerHTML = message; //Changed to innerHTML to pass <b></b> tag 
     document.getElementById('message').style.color = "Red";
+    document.getElementById('message').style.fontWeight = "normal";
 }
 
 //Document - Javascript Object
