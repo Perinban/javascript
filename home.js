@@ -1,23 +1,30 @@
-'use strict';
+//To avoid declaring variables to the window. If declared in window, it will throw an error when use strict is active
+//If we declare without any var, const or let, it will be declared in window
 
-//To avoid declaring variables to the window. If declared in window, it will throw an error
-//Declaring variables in windows is nothing but declaring without any var, const or let.
+//Global variables can be easily overwritten by other scripts which is not an safer/advisable one.
+
+'use strict';
 
 //testwindow = 'test'; //Since we have used use strict for this line it will throw an error
 
-//alert("Hello World");  //Test Message
+//Script is executed top to bottom approach
+//alert("Hello World");  //Test Message - Once this line is executed, bottom lines will be paused and will wait for this to get completed.
+//Only once user clicks close, the other lines will get executed.
 
-//showMessage("Value Passed through Function");
+showMessage("Value Passed through Function");
 
-//console.log("Print any message in the console"); --Used for debuggging purpose
+console.log("Print any message in the console"); //We can print any intermediate value to the console and check. 
+//Mainly it is Used for debuggging purpose
 
-//let total = 99; - Declaring a variable
+//Declaring a variable
+//let total = 99;
 
 let welcome = 'Welome'; //Declaring a variable and pass the same in the function
 
-showMessage(welcome);
+showMessage(welcome); //Returns Welcome - which is stored inside the variable
 
-console.log(window.welcome); //Since we have used let, it is not being used on window anymore. This will return undefined
+console.log(window.welcome); //Since we have used let, it is not being used on window anymore. This will return undefined.
+//Window is nothing but a Object Window
 
 //Declaring multiple variables
 
@@ -50,43 +57,44 @@ var price4 = 20;  //In case of let, if we try the same thing, it will throw the 
 
 let price5 = 20;
 showMessage(price5);
-price5 = price5*20;  //Numberic Calculation price5 *= 20 is similar to price5 = price5 * 20
+price5 = price5*20;  //Numeric Calculation price5 *= 20 is similar to price5 = price5 * 20
 showMessage(typeof(price5));  //Returns the number since price5 is a number datatype
 
 let price6 = 20;
-showMessage(price6++); //While excution, price6 is not incremented. It gets incremented after the execution of the process - At this stage, it will be 20.
+showMessage(price6++); //It gets incremented after the printing the value. So, it will be 20.
 showMessage(price6); //At this line, it gets incremented and display as 21
 
 let price7 = 3 + 2 * 4; // 2*4 = 8 + 3 = it prints 11
 showMessage(price7); //MDN Operator Precedance
 
 //While performing decimal operations we will get garbage values.
-let price8 = 1.1 + 1.2;
-showMessage(price8); //It should be equal to 2.3
+let price8 = 1.1 + 1.3;
+showMessage(price8); //It should be equal to 2.4 but returns with some additional garbage values because of the internal calculation happens inside Javascript engine
 
 //Negative number
 let amount = 0;
 showMessage(--amount); //Returns -1 (Negative values)
 
 let message = 'Hello World';
-showMessage(typeof(message));
+showMessage(typeof(message)); //Returns String
 
 // \is the escape character for quotes
 let message2 = 'Hello \'World\'';
-showMessage(message2);
+showMessage(message2); //Returns Hello 'World' 
 
 //With backtick, we can print a string. Speciality of Backtick is it supports interpolation. It can print variable within the string
-let name2 = 'Perinban'; //name is a keyword and it cannot be used as variable
-let message3 = `Hello ${name2}`;  //Name2 is interpolated and printed here as Hello Perinban
-showMessage(message3);
+let name2 = 'Rick'; //name is a keyword and it cannot be used as variable
+let message3 = `Hello ${name2}`;  //Name2 is interpolated(which means we can pass the variables and get its values)
+showMessage(message3); //Returns Hello Rick
 
 //Concatenation
 let name3 = "Hello"
-let message4 = name3 + " World"; // + is used for concatenation
+let message4 = name3 + " World"; // + is used for concatenation. Stores Hello World in message4
 message4 = message4.toLowerCase(); //Lower case is a method to convert all the letters to the lower case
-message4 = message4.length; //Length is a string property to count the no.of letters in the string
+message4 = message4.length; //Length is a string property to count the no.of letters in the string which returns number type
 message4 = message4.toString(); //Convert number to string
 message4 = Number.parseInt(message4); //Convert String to Number. Number is a constructor
+message4 = +message4; //Simple way to Convert String to a Number
 showMessage(typeof message4);
 
 //NAN - Not a Number
@@ -128,8 +136,10 @@ showMessage(typeof person.lastName); // lastName object is defined with string p
 
 showMessage(typeof person.Number); //This will return number
 
-if(5 === 5){
-    showMessage('Yes');
+//Irrespective of the types such as string, Number, Boolean in the same Object, Object can hold any number of properties
+
+if(5 === 5){   //Triple equal to compares with both value and type on both sides
+    showMessage('Yes'); //Since both were equal, it will be displayed
 }
 
 if(5 > 10){
@@ -137,20 +147,20 @@ if(5 > 10){
 }
 
 if(5 >= 5){
-    showMessage('Y');
+    showMessage('Y'); //Since it satisfies the condition, it will be displayed
 }
 
 let state = 'FL';
 let taxPercent = 0;
 
-if(state === 'FL') //If Condition
+if(state === 'FL') //If Condition is a conditional check where the block of code inside it will be executed only the condition gets satisfied
 {
-    showMessage(taxPercent);
+    showMessage(taxPercent); //Since the condition Satisfied, it get executed and returns 0
 }
 
-if(true) //Condition is always true
+if(true) //Condition is always true. So, whatever happens, it will be executed always
 {
-    showMessage(true);
+    showMessage(true); //True will displayed to output
 }
 
 //False - false, 0, empty strings ('',""), null, undefined, NaN
@@ -179,20 +189,20 @@ showMessage(typeof(decimal)); //Returns Number
 let state2 = 'FL';
 let taxPercent2;
 
-if(state2 === 'MI'){
+if(state2 === 'MI'){ //Condition fails
     taxPercent2 = 10; 
 }
-else if(state2 == 'CA'){
+else if(state2 == 'CA'){ //Condition fails
     taxPercent2 = 0;
 }
 else{
     taxPercent2 = 8;
 }
 
-showMessage(taxPercent2); //Returns 8 as the State is FL
+showMessage(taxPercent2); //Returns 8 as the State is FL and else block is executed
 
 //Double equal will match only with values
-//But triple equal will match with values as well as data. So, it is always preferred to use triple equal to.
+//But triple equal will match with values as well as datatype. So, it is always preferred to use triple equal to because of its strict comparison nature
 if ( 1 === '1'){ 
     showMessage('True');
 }
@@ -202,14 +212,14 @@ else{
 
 //Ternary Operator
 
+//Syntax
 //(Condition) ? true-statement : false statement;
 
 let price10 = 20;
 
 let message7 = (price10 > 10) ? 'Expensive' : 'Cheap';
 
-showMessage(message7);
-
+showMessage(message7); //Returns Expensive since condition returns true and true statement is executed
 
 if(true){
     let variable = 'yes';
@@ -218,7 +228,8 @@ if(true){
 }
 
 //showMessage(variable); //Variable cannot be accessed outside the block. It will throw an error incase of let statements
-//Similar to let, in const we cannot access data variable inside the block value outside the block
+
+//Similar to let, const declaration works in a similar manner
 
 if(true){
     var variable2 = 'yes';
@@ -229,9 +240,9 @@ if(true){
 showMessage(variable2); //The value passed passed outside the block and it returns no as the output incase of var.
 
 //For loop
-//Consists of three parts: Initailisation, Condition check, Incrementation/Decrementation
+//Consists of three parts: Initailization, Condition check, Incrementation/Decrementation
 let j='';
-for(let i=0; i<3;i++)
+for(let i=0; i<3; i++)
 {
     j = j + (i).toString();
     console.log(j);
@@ -241,24 +252,25 @@ for(let i=0; i<3;i++)
 console.log("While loop starts");
 //While loop
 let loop = 1;
-while(true && loop < 5){
+while(true && loop < 5){ //Until the loop condition fails, it will executes
     console.log(loop);
-    showMessage(loop);
-    loop++;
+    showMessage(loop); //Returns 1,2,3,4
+    loop++; //Loop value incrementation happens here
 }
 
 console.log("Do While loop starts");
 //Do while loop -> Loop executes atleast once even if the condition fails
+//Since the condition check happens at last, block will be executed atleast once
 
 let count = 0;
 do{
     console.log(count);
-    count++;
+    count++;           //Incrementation happens here
     showMessage(count);
-}while(count < 5);
+}while(count < 5);    //Condition check happens here
 
 //Function
-//It can be call over and over
+//It can be called again and again based on the user wish
 
 //Function Declaration
 function showMessage2(){
@@ -266,10 +278,12 @@ function showMessage2(){
     console.log("Test Data");
 }
 
-showMessage2(); //Function call showMessage2 is executed
+//Function will be executed only when it is being called.
+showMessage2(); //showMessage2 Function call
 showMessage2();
+//It has been called two times, the block will be executed twice
 
-//Function Expression
+//Function Expression - Another way to declare function and assign to variable
 let fn = function(){
     showMessage("Function call");
     console.log("Function call");
@@ -350,6 +364,7 @@ function getSecretCode(value){
 let secretCode2 = getSecretCode(2);
 showMessage( secretCode2 ); //So finally 12*2 = 24 will be the output
 
+//changePercentOff is declared in utils.js
 changePercentOff(30); //It is passed to the changePercentOff function
 
 changePercentOff(45);
@@ -358,9 +373,9 @@ let person2 = {}; //New empty Object. Object can be created with curly braces
 
 //Object creation
 let person3 = {
-    name : 'Perinban',
-    age : 25,
-    flag : true
+    name : 'Perinban', //String
+    age : 25,          //Number
+    flag : true        //Boolean
 };
 
 showMessage(person3.name);//Accessing a object
@@ -370,7 +385,7 @@ console.log(person3.country); //Returns Undefined
 
 //Changing a property value in the Object
 
-person3.name = 'Sam';
+person3.name = 'Sam'; //Overides the existing value to Sam and old value completely gets lost
 
 showMessage(person3.name); //Person3 name has been changed from Perinban to Sam
 console.log(person3);
@@ -415,17 +430,17 @@ person5.showInfo();
 
 let person6 = {
     name : 'Sam',
-    age : this.name, //Returns bootstrap value. Without method we cannot use the property data within object
+    age : this.name, //Returns bootstrap value from window object which is declared globally. Without method we cannot use the property data within object [Points to Window Object]
     showInfo : function(){
         showMessage(name); //Pulls data from global variable since it does not aware of the curent object
         showMessage(this.name); //This pulls the data from current object and return Sam - By this way we can access object property data within Object
-        showMessage(this.age);
+        showMessage(this.age); //This points to the current Object and returns the value stored in age
     }
 };
 
-person6.showInfo();
+person6.showInfo(); //Executes showInfo method
 
-//Since method is a function, it can do all the things which functions can do. Pass parameters and returns values.
+//Since method is a function, it can pass parameters/returns values like functions
 
 showMessage(typeof person6.showInfo); //Returns Function - Traditionally called as Method
 
@@ -444,22 +459,23 @@ showMessage(message8); //It returns Hello
 //Passing Object to Functions - Pass by Reference [ We can modify properties and Methods entirely]
 
 let person7 = {
-    name : 'John',
-    age : 40,
-    partTime : false
+    name : 'John', //String
+    age : 40,      //Number
+    partTime : false //Boolean
 };
 
 function ageCorrection(person){
+    //Person holds the current object pointer. So, if we change the value of it, it modifies the original value
     person.age = 24 ; //Here the Original value itself got changed from 40 to 24
 }
 
-ageCorrection(person7); //It original value gets lost and replaces with the function value - Pass pointer to function
+ageCorrection(person7); //Original value stored in age gets lost and replaces with the function passed value - Work as Pointer
 
-showMessage(person7.age); //So, while calling it, it returns 24.
+showMessage(person7.age); //Returns 24 as a result
 
 //Standard Built in Objects
 
-let now = new Date();
+let now = new Date(); //Date is a constructor function where it has how the date should be created
 
 showMessage(now.toDateString()); //Returns the Current Date and convert it to String
 
@@ -481,7 +497,9 @@ let values1 = [1,2,3]; //Here we have created and also initialized array
 
 //Another way to create array
 
-let values2 = Array.of(1,2,3);
+let values2 = Array.of(1,2,3); //Array is also a constructor function which defines how the Array should be created
+
+let values02 = new Array(1,2,3); //With new keyword also we can create an new Array.
 
 const values3 = ['a','b','c'];
 
@@ -531,9 +549,8 @@ values7.unshift(0); //Adds 0 to the beginning of the array
 
 console.log(values7,'Values 7'); //Returns 0,1,2,3,4
 
-
-//Slice - cut from position 
-//Start position, End position
+//Slice - cut between Start position and End position
+//End Position will not be considered
 
 const values8 = [0,1,2,3,4,5];
 
@@ -554,8 +571,9 @@ const copyArray = values8.slice(); //It copies the entire source Array
 
 console.log(copyArray, "Copy Array");
 
-//Splice is for deleting
-//Start position and count of characters needs to be deleted
+//Splice is for deleting as well as inserting
+//Start position and count of characters needs to be passed for deletion
+//If no.of positions needs to be deleted is passed as 0. it wont delete anything
 
 const values9 = [0,1,2,3,4];
 
@@ -609,9 +627,16 @@ const set = values14.filter(function(item){
     return item > 2; //Returns all matched condition within the array
 });
 
-console.log (values14, "Values 14"); //Original will be preserved as such and it wont be affacted because of filter
+console.log (values14, "Values 14"); //Original will be preserved as such and it wont be affected because of filter
 
 console.log(set, "Set"); //Returns 3,4,5
+
+const setmultiple = values14.filter(function(item1,item2){ //If multiple parameters passed within filter function. it copies the same data to all the parameters
+    console.log(item1,item2); //Item1 and item2 posses the same values
+    return item1 > 2;
+});
+
+console.log(setmultiple); //Returns 3,4,5
 
 //Find
 //Matches the first element that matches in the array
@@ -638,7 +663,9 @@ const set3 = values16.forEach(function(item){
 
 console.log(set3); //It Returns Undefined
 
-showMessage(containers.length); //Total no.of containers used in HTML
+//Containers defined in utils.js
+
+showMessage(containers.length); //Total no.of container class used in index.html ie) 8
 
 console.log(containers);
 
@@ -781,7 +808,7 @@ let listOfProducts = [
 ];
 
 for(const item of listOfProducts){
-    console.log(JSON.stringify(item));  //Change Javascript Object to JSON string
+    console.log(JSON.stringify(item));  //Change Javascript Object to JSON(Javascript Object Notation) string
     console.log(item); //Reurn as Object
 }
 
@@ -811,6 +838,11 @@ const loopArray = [0,1,2,3,4,5];
 
 for(const item of loopArray){
     console.log(item);
+}
+
+for(const item in loopArray){
+   console.log(loopArray[item]); //Returns 0,1,2,3,4.5 in the way how it stored inside arrays ie) Number
+   console.log(item); //Returns 0,1,2,3,4,5 as Strings
 }
 
 //Prints same result
@@ -849,7 +881,7 @@ for(const item of loopArray2){
     console.log("Iterating" + item, "Continue")
     if(item>3)
     continue;
-    console.log(item, "Continue");
+    console.log(item, "Continue"); //Line wont get executed after it condition fails with continue
 }
 
 /* Result
@@ -901,7 +933,6 @@ showMessage3();
 //Short Circuiting
 //Optimization for Logical expressions
 //Bypasses subsequent expressions in && or || based on truthy or falsy
-
 
 let result2 = isColorRed("black") && isGreaterThan1400(1401);
 
@@ -1059,7 +1090,6 @@ catch(error){
     handleError(error);
 }
 
-
 let result8 = 0;
 
 try{
@@ -1108,10 +1138,11 @@ catch(error){
 //Object has Constructive Property
 //Returns a reference to an object itself
 
-
 let introDate = new Date();
-let strValue = new String()
+let strValue = new String();
 let stringdata = 'Hello';
+console.log(String); //It calls String native function()
+console.log(String.constructor); //It calls function native function() function
 
 //For primitives, it can cast into Object and make use of Constructor Property
 console.log("Primitive String = " + stringdata.constructor.toString()); //It calls a String function which returns the type String
@@ -1466,7 +1497,7 @@ let pers3 = {
     age : '25'
 }
 
-let pers4 = {...pers3}; //Copied successfully 
+let pers4 = {...pers3}; //Objects can be copied using flower brackets 
 
 console.log(pers4); //Returns same as pers3
 
@@ -2034,3 +2065,788 @@ console.log(Object.getOwnPropertyNames(loan)); //Returns only Name
 
 //To find it,
 console.log(Object.getOwnPropertySymbols(loan)); //Returns Symbol(income)
+
+//Self executing function
+(function(){
+    showMessage("Self Executing Function");
+    console.log("Self Executing Function");
+})(); //It executes on the own
+
+//Object
+//Object is a essentially a way for grouping the information into single variable
+//Instead of multiple variables, we can pass as a single object
+//Object  not just pass an information but functionality too like methods
+
+
+//Create a Object using object literal
+let person18 = {
+    firstName : "Sam",
+    lastName : "Weston"
+}
+
+showMessage(person18.firstName); //Returns Sam
+//Here firstName and lastName were object literals
+
+//To add a new property, we dont need to go and edit the code again and again
+//Simply we can easily add it because of its dynamic nature
+
+person18.age = 25;
+
+showMessage(person18.age); //Returns 25 
+console.log(person18);  //Returns entire Object with the inclusion of age property
+
+//Adding Methods to the Object
+
+person18.isAdult = function(){
+    return this.age  >= 18;
+    //this is used to reference other properties on the object within the object
+}
+
+showMessage(person18.isAdult()); //Returns True since age crosses 18
+
+//Passing the function through the variables
+
+function registerUser(first, last){
+    let person = {
+        firstName : first,
+        lastName : last
+    }
+    showMessage(person.firstName); //Returns Helly
+    console.log(person);
+
+    person.firstName = "Sam"; //Kelly has been changed to Sam. Old value will get lost here
+    return person.firstName + " " + person.lastName;
+}
+
+registerUser("Helly","kate"); //Value passed through function
+//Here it will be passed as pass by Reference method
+
+console.log(registerUser("Helly","kate")); //Returns Sam Kate [Helly has been changed to Sam]
+
+//ShortHand Syntax
+
+function registerUser2(firstName, lastName){
+    let person = {
+        firstName : firstName,
+        lastName : lastName
+    }
+    showMessage(person.firstName);
+}
+
+registerUser2("Sam", "Weston");
+
+//Here property name and variable passed through the function have same names, so, it can be declared as below,
+
+function registerUser3(firstName, lastName){
+    let person = {
+        firstName,
+        lastName
+    }
+    showMessage(person.firstName);
+    console.log(person);
+}
+
+registerUser3("Sam","Weston");
+
+//This is a simple way to create an person object and set the firstName property to a variable that is also named firstName
+//Thats the property shorthand Syntax
+
+//Methods for shortHand Syntax 
+
+let person19 = {
+    firstName : "Jim",
+    lastName : "Cooper",
+    age : 25,
+    isAdult : function(){
+        return this.age >=  18;
+    }
+}
+
+//Here isAdult is an Method used in the Object
+
+//Object Literal Method Declaration ShortHand Syntax
+
+let person20 = {
+    firstName : "Jim",
+    lastName : "Cooper",
+    age : 18,
+    isAdult() { //Short Hand Syntax for Method
+        return this.age >= 18; //Since age is equal to 18, it will return true
+    }
+}
+
+showMessage(person20.isAdult()); //Returns True
+
+//This function method is specific to Object Literal
+//We cannnot create a same way function outside the object
+
+//Javascript provides a object Object 
+//There are several functions that we can use for inspecting, manipulating, etc with the Objects
+
+console.log(Object.keys(person20)); //Returns all the properties of the object as an array Object
+
+showMessage(Object.keys(person20).length); //Returns 4 since it has 4 properties [firstName, lastName, age and isAdult Method]
+
+//Similar to Object.Key we can make use of for in loop (which is an most effective way)
+
+for(let propertyName in person20){
+    console.log(propertyName); //Print all the property names one by one
+}
+
+//Javascript Equality Operators
+/*
+ == (double equal to ) -> Only the match the value not the type. Rarely Used
+=== (triple equal to ) -> Match the value and the type . Mostly used
+Object.is -> Similar to === (triple equal to ) except few mathematical differences. It is less likely to be used
+*/
+
+//Object.is
+//Pass two objects in it, it will return true or false if they are equal or not
+
+showMessage(Object.is(person19.lastName,person20.lastName)); //Returns True
+
+//Because of the below reasons we wont be using double equal to in most of the cases
+console.log("42" == 42); //Returns True
+
+console.log(0 == false); //Returns True
+
+console.log(null == undefined); //Returns True
+
+console.log( "" == 0); //Returns true
+
+console.log( [1,2] == "1,2"); //Returns True
+
+//Main difference between triple equal to (===) and Object.is
+//In triple equal to, NaN is not equal to NaN(Not a number) whereas in Object.is NaN is equal to NaN
+//In triple equal to +0 equal to -0 whereas in Object.is, +0 is not equal to -0
+
+console.log( NaN === NaN ); //Returns false
+
+console.log( Object.is(NaN, NaN) ); //Returns True
+
+console.log( +0 === -0 ); //Returns True
+
+console.log( Object.is(+0,-0) ); //Returns False
+
+//Both the triple equal to and Object.is are type safe
+
+console.log(42 === '42'); //Returns False
+
+console.log( Object.is(42,"42") ); //Returns False
+
+//When we compare two objects, it will always return false since they both store in a different memory address
+
+Object.is(person19,person20); //Returns False
+
+//It does not compare the value contain within the Object but rather the memory address of these Objects
+
+//For primitive types, it compare the values rather than memory addresses. Only for the Object it compares the memory since they are pointer based
+
+let string1 = "String";
+
+let string2 = "String";
+
+console.log( Object.is(string1,string2) ); //Returns True
+
+//Object.assign
+//it is used to copy or merge the properties of one object to the another object
+
+let person21 = {
+    firstName : "King",
+    lastName : "Lee"
+}
+
+let person22 = {} //Empty Object
+
+//Copy to Object person22 from person21 using Object.assign
+//Syntax will be destination, source
+
+Object.assign(person22,person21);
+
+console.log(person22); //Prints the copied data same as person21
+
+let person23 = {
+    firstName : "Sam",
+    lastName : "Anderson"
+}
+
+let person24 = {
+    age : 27
+}
+
+Object.assign(person24,person23);
+
+console.log(person24); //Returns age as the firstPropery and then firstName and lastName
+
+console.log(person23); //Returns firstName and lastName
+
+person23.firstName = "William";
+
+console.log(person23);
+
+console.log(person24); //Changing the value in person23 does not affect in person24
+
+//If have same property in object
+
+let person25 = {
+    firstName : "William",
+    lastName : "Tesly"
+}
+
+let person26 = {
+    firstName : "Sam",
+    lastName : "Jamison"
+}
+
+Object.assign(person26, person25);
+
+console.log(person25);
+
+console.log(person26); //If have same property, the old values will be overwritten and new values will be stored. Old values will be completely losed
+//Both will return William and Tesly
+
+let person27 = {
+    firstName : "Jamie",
+    lastName : "Jamieson"
+}
+
+let healthStats = {
+    height : 68,
+    weight : 150
+}
+
+function mergeHealthStats(person,healthStats){
+    return Object.assign(person,healthStats);
+}
+
+let mergedPerson = mergeHealthStats(person27,healthStats);
+
+console.log(mergedPerson); //It creates a combination of both objects
+
+console.log(person27); //Even though it is assigned to a variable, object can be mutable. So, person27 is also gets affected when we are using Object.assign
+//Original data will get lost
+
+console.log(healthStats);
+
+//Good immutability practice says that the function really ever mutate the objects that are passed into it.
+//Object.assign actually takes an unlimited properties
+
+//To fix this,
+
+let person28 = {
+    firstName : "Jamie",
+    lastName : "Jamieson"
+}
+
+function mergeHealthStats2(person,healthStats){
+    return Object.assign({}, person, healthStats); //It will copy everything to the left most object. Hence creating an empty object could fix this
+}
+
+let mergedPerson2 = mergeHealthStats2(person28,healthStats);
+
+console.log(mergedPerson2); //Stores both the object properties to the empty object and return it here
+
+console.log(person28); //It does not get affected and original values are returned as such. 
+
+console.log(healthStats);
+
+//Constructor function
+
+function Person(first, last){
+    this.firstName = first;
+    this.lastName = last;
+}
+//this always refers to Object
+//Which Object it refers to depends on the context of the code which was executed at that time
+//When Person was executed, this was referring an new empty object. Thats what new keyword does
+//New creates a new object and sets the context of the Keyword to the new object
+
+let person29 = new Person('Sam','King');
+//person29 is a created as a instance of the Person object like a constructor class
+
+console.log(person29);
+
+//Object.Create 
+//Whenever we tried to create an object, back of the hood it is getting created using Object.create
+//This could be little complex
+
+let person30 = Object.create(
+    Object.prototype,
+    {
+        firstName : {
+            value : 'Sam',
+            enumerable : true,
+            writable : true,
+            configurable : true
+        },
+        lastName :{
+            value : 'King',
+            enumerable : true,
+            writable : true,
+            configurable : true
+        }
+    }
+)
+
+console.log(person30); //It creates the Object with firstName Sam and lastName King
+
+//Bracket Notation
+
+let person31 = {
+    firstName :  "Jim",
+    lastName : "Sashi"
+}
+
+//Instead of dot operator, we could see bracket notation and pass the property as a string to get the value of the object property
+showMessage(person31['lastName']); //Returns Sashi
+
+//Suppose if we have space or invalid characters in the property name, we could not use dot operator
+//At that case, we need to go with bracket notation
+
+let person32 = {
+    firstName : "Sam",
+    lastName : "Anderson",
+    "max age" : 80,
+    "hair color" : 'black'
+}
+
+showMessage(person32["max age"]); //Returns 80. Here we cannot able to use dot operator because of the space in the property name
+
+//Variable that contains the property name and we require to get that value of the property
+//At that case, brackets would be useful
+
+let propertyName2 = 'hair color';
+
+showMessage(person32[propertyName2]); //Returns Black
+
+//Another usage is with for in loop to looping and printing the values of the object properties
+
+for(let property in person32){
+    console.log(property); //It holds the property
+    console.log(person32[property]); //Returns all the property values one by one
+}
+
+//Property is more than just a name and value
+//Every property has a property descriptor that we can use to see the attributes of the property 
+//To get the property descriptor, we use Object.getOWnPropertyDescriptor
+
+console.log(Object.getOwnPropertyDescriptor(person32,"firstName"));
+//Returns value, writable, enumerable and configurable
+
+//Writable property defines that the properties value can be changed from the initial value or not
+//Object properties can be changed with Object.defineProperty method
+
+Object.defineProperty(person32, 'firstName', {writable:false});
+
+console.log(Object.getOwnPropertyDescriptor(person32, "firstName")); //Returns Writable as false
+
+//person32.firstName = 'William'; //Returns Error [ Attempted to assign to read only property ]
+
+Object.defineProperty(person32, 'firstName', {writable:true});
+
+console.log(Object.getOwnPropertyDescriptor(person32,'firstName')); //Changed back writable to true
+
+person32.firstName = "William";
+
+console.log(person32); //Firstname has been changed to William
+
+//What happens when non-writable property contains an object
+
+let person33 = {
+    name : {
+        firstName : "William",
+        lastName : "Shakespeare"
+    },
+    age : 25
+};
+
+console.log(person33);
+
+Object.defineProperty(person33,"name", {writable : false});
+
+console.log(Object.getOwnPropertyDescriptor(person33, "name"));
+
+person33["name"].firstName = 'Sam'; //Even though we changed to writable to false, still we can write the value to firstName since it has its own property
+
+console.log(person33); //Returns firstName as Sam
+
+person33['name'].middleName = 'N'; //It allows to add new property as well
+
+console.log(person33); //Returns the new values with middleName
+
+//But if we try to change the property, it would fail
+
+//person33['name'] = {}; //Returns Error attempted to write a read only property
+
+//Simply we can say as name property is a pointer to the object in memory
+//When it makes as read-only,it just preventing the pointer being changed.
+
+//Also, we can prevent the Object properties being changed as well using Object.freeze
+
+Object.freeze(person33["name"]);
+
+//person33['name'].additionalName = "S"; //Returns error that Attempted to assign to read only property
+
+//person33['name'].firstName = "William"; //Prevents changing the value if used Object.freeze
+
+//We cannot unfreeze an Frozen Object
+
+//Enumerable Attribute
+//By default, all the properties in the Object are enumerable
+//which means we can enumerate them using for in loop and list them with Object.keys
+
+let person34 = {
+    firstName : "Sam",
+    lastName : "Anderson"
+}
+
+for(let propertyName3 in person34){
+    console.log(person34[propertyName3]);
+}
+
+Object.defineProperty(person34,"firstName", {enumerable:false});
+
+for(let propertyName4 in person34){
+    console.log(person34[propertyName4]); //Sam wont be printed here since enumerable set to false
+}
+
+person34.firstName = "William";
+
+console.log(person34); //Values can be changed and William will be printed here
+
+console.log(Object.keys(person34)); //Displays only lastName. FirstName wont be coming out since enumerable is set as false
+
+//Setting enumerable to false also affects the JSON serialisation of the object
+
+console.log(JSON.stringify(person34)); //Displays only lastName and firstName wont be printed
+
+//Configurable property locks down the property to prevent the property descriptors themselves being changed
+//It also prevents the property being deleted from the Object
+
+let person35 = {
+    firstName : "Sam",
+    lastName : "Weston"
+}
+
+//delete person35.firstName; //Able to delete it since by default all the properties set to true
+
+//console(person35);
+
+Object.defineProperty(person35,"firstName",{configurable:false});
+
+console.log(Object.getOwnPropertyDescriptor(person35, 'firstName'));
+
+//Object.defineProperty(person35,"firstName",{enumerable:false}); //Cannot able to change enumerable attribute because of configurable false
+Object.defineProperty(person35,"firstName" ,{writable : false}); //But writable works able to change to false even though configurable set to false
+
+console.log(Object.getOwnPropertyDescriptor(person35, 'firstName'));
+
+//Object.defineProperty(person35, "firstName", {configurable: true}); //Once configurable changed to false, we again cannot change it to true - This will throw error 
+
+//delete person35.firstName; //Once configurable set to false, we cannot delete a property
+
+let person36 = {
+    name : {
+        firstName : "Sam",
+        lastName : "Billings"
+    },
+    age : 25
+};
+
+//Create full name using getter
+//Get function is a getter
+
+Object.defineProperty(person36, 'fullName', {
+    get: function(){
+        return this.name.firstName + " " + this.name.lastName;
+    }
+});
+
+console.log(person36);
+
+console.log(person36.fullName); //Returns Sam Billings
+
+console.log(Object.keys(person36)); //Returns name and age property
+
+console.log(Object.getOwnPropertyDescriptor(person36, "fullName"));
+//Returns Get: function, Set: undefined, enumerable: false and configurable: false
+
+//Suppose we need to set firstName and lastName based on fullName. At that case, setters could be handy
+
+let person37 = {
+    fullName : "Sam Billings",
+    age : 25
+}
+
+Object.defineProperty(person37, "fullName", {
+    set: function(value){
+        let nameParts = value.split(' ');
+        this.firstName = nameParts[0];
+        this.lastName = nameParts[1];
+    }
+});
+
+person37.fullName = "Sam Billings"; //Here we are setting the property of the fullName only then Setter will get executed
+
+console.log(person37); //Returns age, firstName and lastName
+
+console.log(person37.fullName); //This will return undefined
+
+console.log(Object.keys(person37)); //Returns fullName, age, firstName and lastName
+
+console.log(person37.firstName); //Returns Sam
+
+console.log(Object.getOwnPropertyDescriptor(person37, "fullName"));
+//Returns get: undefined, set:function, enumerable:true and configurble: true
+
+console.log(Object.getOwnPropertyDescriptor(person37, "firstName"));
+//Returns value: "Sam", writable: true, enumerable : true and configurable: true
+
+//Prototypes
+//Prototypes is an object that exists on every function in Javascript
+
+function myFunction(){
+}
+
+console.log(myFunction.prototype); //Returns myFunction {}
+
+let myFunction2 = function(){
+}
+
+console.log(myFunction2.prototype); //Returns myFunction2 {}
+
+//Either way we create a function, prototype property will be always present in a function
+
+let person38 = {
+    firstName : "sam",
+    lastName : "Billings"
+}
+
+console.log(person38.prototype); //Returns undefined for Object
+
+//To view the Object prototype,
+
+console.log(person38.__proto__); //Returns {} it is an empty object
+
+//Object Prototype and function prototype are used differently
+
+//Function Prototype
+//A function prototype is an object instance that will become the prototype for all objects created using a function as a constructor
+
+//Object Prototype
+//An object prototype is the Object instance from which the object is inherited
+
+//Its either function or object prototype -> Both were just a instance of an object in memory
+
+//When a function is created, a new prototype object is created in memory an attached to function behind the scenes
+//If that function is then used a constructor function with the new keyword, the new object that is created has a proto property that is pointing to the same object in memory
+//That is called function prototype
+
+//Person constructor function
+
+function Person1(first,last){
+    this.firstName  = first,
+    this.lastName = last
+};
+
+console.log(Person1.prototype); //Returns Person1 {}  -> It is an empty person object
+
+let sam = new Person1("Sam", "Billings");
+
+console.log(sam.__proto__); //Returns Person1 {} -> it is also empty object of type Person1
+
+console.log(Person1.prototype === sam.__proto__); //Since they are same instance, it returns true
+
+//Change the prototype property
+
+Person1.prototype.age = 29;
+
+console.log(Person1); //This will return same Person1 function
+
+console.log(sam); //This will return the instance of the Person1 
+//Person1 { firstName: "Sam", lastName: "Billings", age: 29}
+
+console.log(Person1.prototype); //Prototype age is being add here
+//Returns Person1 { age:29 }
+
+console.log(sam.__proto__); //this also returns the same
+//Returns Person1 { age:29 }
+
+let clinton = new Person1("William", "Clinton"); //Creation of new instance of Object Person1
+
+console.log(clinton);
+
+console.log(Person1.prototype);
+
+console.log(clinton.__proto__); //Returns the same 
+//Returns Person1 { age:29 }
+
+//If I try  to change anything
+
+clinton.__proto__.age = 20;
+
+//Changed age will be reflected in all. Since all were stored in the same memory
+console.log(sam.__proto__); //Returns Person1 { age: 20 }
+
+console.log(clinton.__proto__); //Returns Person1 { age: 20 }
+
+console.log(Person1.prototype); //Returns Person1 { age: 20 }
+
+//Object instance that is a function prototype becomes the prototype of all the objects created from that prototype
+//So adding a property to a function's prototype affects all the Objects that are constructed using that function
+
+//Here, If i change Person1.prototype.age it changes for all
+//If any constructor prototype age is changed, it changes for all
+//But if we change all for single Object instead of prototype,
+
+sam.age = 40;
+
+console.log(sam.age); //Returns 40
+console.log(clinton.age); //Returns 20 - Here it is not affected
+
+//Here what is happening is we are not changing the prototype age property, instead adding a new property to sam. So, clinton.age were not affected
+//But still sam have access to both prototype as well
+
+console.log(sam.age); //Returns 40
+console.log(sam.__proto__.age); //Returns 20
+
+console.log(Object.keys(sam)); //Returns firstName, lastName and age
+
+delete sam.age; //Delete the age property
+
+console.log(sam.age); //It takes the value from prototype and returns 20
+//Javascript checks the value for the property, if it does not find it. it just checks for the prototype whether it has the value or not. If it has, it just returns it.
+
+console.log(sam.hasOwnProperty('age')); //Returns false. Since it does not have age property. It just gets value from Prototype
+
+//Whatever the above scenarios properties do, it can do on functions and Objects or methods as well
+
+//Basically instance property overides the prototype properties
+
+//Change function prototype to a new object
+
+function Person2(firstName,lastName){
+    this.firstName = firstName,
+    this.lastName = lastName
+}
+
+Person2.prototype.age = 18;
+
+let sam2 = new Person2("Sam", "Vikings");
+
+//Create a new instance property age for sam2 which overides the prototype property
+sam2.age = 20;
+
+console.log(sam2); //Returns age as 20
+
+let lia = new Person2("Lia", "Michael");
+
+console.log(lia);
+
+//Change function prototype to a new object
+
+Person2.prototype = { age: 30 };
+
+console.log(sam2); //Returns age as 20 since it has age property in it
+
+console.log(lia.age); //Returns 18 since we are completely changing the object
+
+let chris = new Person2("Chris", "Woakes");
+
+console.log(chris.age); //Returns 30. The new Objects which gets created after the complete change of prototype attains the new value
+
+console.log(Person2.prototype); //Returns {age: 30}
+
+console.log(lia.age); //Returns 18 but still lia holds the old prototype value
+
+//When we point out to a new object, a new instance will be created. Totally now it has 2 instances
+
+console.log(lia.__proto__); //Returns Person2 { age:18 }
+
+console.log(sam2.__proto__); //Returns Person2 { age: 18 }
+
+console.log(chris.__proto__); //Returns { age:30 } -> Here Person2 object is not showing only it returns the newly created object which we pointed to a different storage memory
+
+//Above Objects have multiple layers of inheritance
+
+console.log(chris.__proto__.__proto__); //Returns empty object
+
+console.log(sam2.__proto__.__proto__); //Returns empty object
+
+console.log(chris.__proto__.__proto__.__proto__); //Returns null
+//Basically sam2 have a Person2 Object instance prototype and inturn Person2 have Object prototype. Like that inheritance goes on.
+//This Object prototype was created from Object constructor
+//The last prototype chain value was null basically which means Object constructor has no prototype
+//NULL indicates the end of the chain
+
+function Person4(firstName,lastName,age){
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.age = age;
+
+    console.log(this); //Student Object
+
+    Object.defineProperty(this, 'fullName',{
+        get: function(){
+            return this.firstName + " " + this.lastName;
+        },
+        enumerable:true
+    });
+
+}
+
+function Student(firstName, lastName, age){
+
+    console.log(this); //Student Object constructor  ie) Student { }
+
+    Person4.call(this,firstName,lastName,age);
+
+    this._enrollmentCourses = [];
+
+    this.enroll = function(courseId){
+        this._enrollmentCourses.push(courseId);
+    }
+
+    this.getCourses = function(){
+        return this.fullName +  "'s Enrolled courses are: " +
+         this._enrollmentCourses.join('. '); //Join returns array as a string
+    };
+    
+}
+
+console.log(Student.prototype); //Student Object
+console.log(Student.prototype.constructor); //Returns the entire Student function
+
+Student.prototype = Object.create(Person4.prototype); //To access all the properties including getters and methods instead of only firstName, lastName and age
+
+//After setting up Person4 Prototype,
+console.log(Student.prototype.constructor); //Returns Person4 property
+
+//To undo the side effect assigning to Person4 property, assigning back to Student Object
+Student.prototype.constructor = Student;
+
+console.log(Student.prototype.constructor); //Returns Student Object
+
+//All prototypes have a constructor property
+//That points to the function that we used to create it
+
+let ron = new Student("Ron", "Weasely", 17);
+
+ron.enroll('CA205');
+ron.enroll('MA101');
+ron.enroll('PS010');
+
+console.log(ron);
+
+console.log(ron.__proto__); //Student Object
+
+console.log(ron.__proto__.__proto__); //Person4 Object
+
+console.log(ron.__proto__.__proto__.__proto__); //Object Constructor
+
+console.log(ron.__proto__.__proto__.__proto__.__proto__); //Returns null
+
+console.log(ron.getCourses());
+
+//Inheritance Chain
+//Student Object -> Person4 Object -> Object Constructor -> Returns Nulls 
