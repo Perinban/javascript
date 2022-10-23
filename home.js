@@ -1,30 +1,30 @@
-//To avoid declaring variables to the window. If declared in window, it will throw an error when use strict is active
-//If we declare without any var, const or let, it will be declared in window
+//If we declare a variable without any var, const or let, it is considered to be declared in window
+//Declaring variable in the windows could cause performance issues. To avoid declaring variables to the window, use strict is being used. If declared, it will throw an error
 
 //Global variables can be easily overwritten by other scripts which is not an safer/advisable one.
 
 'use strict';
 
-//testwindow = 'test'; //Since we have used use strict for this line it will throw an error
+//testwindow = 'test'; //Since 'use strict' has been active, it will throw an error as "Can't find variable"
 
-//Script is executed top to bottom approach
-//alert("Hello World");  //Test Message - Once this line is executed, bottom lines will be paused and will wait for this to get completed.
-//Only once user clicks close, the other lines will get executed.
+//JavaScripts are executed from top to bottom approach
+//alert("Hello World");  //Test Message - Below lines are executed only after the successful completion of the current line ie) Alert
+//Only when user clicks close in the alert box, the below lines will get executed.
 
 showMessage("Value Passed through Function");
 
-console.log("Print any message in the console"); //We can print any intermediate value to the console and check. 
-//Mainly it is Used for debuggging purpose
+console.log("Print any message in the console"); //Intermediate outputs/values can be printed in console. 
+//Console can be used for debugging the issues in the code.
 
 //Declaring a variable
 //let total = 99;
 
-let welcome = 'Welome'; //Declaring a variable and pass the same in the function
+let welcome = 'Welome'; //Any values can be passed inside the function. Same name can be used as a variable and values in it.
 
-showMessage(welcome); //Returns Welcome - which is stored inside the variable
+showMessage(welcome); //Returns Welcome - A stored value inside welcome variable
 
-console.log(window.welcome); //Since we have used let, it is not being used on window anymore. This will return undefined.
-//Window is nothing but a Object Window
+console.log(window.welcome); //Since let has been used, welcome variable is not created at window. Hence it will return as undefined.
+//window is nothing but a Object Window
 
 //Declaring multiple variables
 
@@ -116,15 +116,16 @@ let saved3;
 let saved2 = 20;
 //Initiallly we stored some value, later we think we need to wipe out the value. So, we can wipe out using null.
 saved2 = null;
-showMessage(saved2); //It will not display anything. It can be viewed in console.log
+showMessage(saved2); //NULL does not have value. Hence it does not display anything in the browser. But still it can be tracked in console.
 showMessage(typeof saved2); //Null will be returned as object
 showMessage(typeof saved3); //Undefined will be returned as undefined
+//Programmer nullifies the value using null and Javascript sets the value as undefined if no initializer has been passed.
 
 //Object
 let person = {
     firstName : "Perinban",
     lastName : "Parameshwaran",
-    Number : 1
+    Age : 25  //Multiple datatypes can be initialised within an object
 }
 
 console.log(person);
@@ -132,9 +133,9 @@ console.log(person);
 showMessage(typeof person); //Returns Object
 
 //. dot operator looks for the object and pulls out the property of the object
-showMessage(typeof person.lastName); // lastName object is defined with string property
+showMessage(typeof person.lastName); // Returns string
 
-showMessage(typeof person.Number); //This will return number
+showMessage(typeof person.Number); //Returns number
 
 //Irrespective of the types such as string, Number, Boolean in the same Object, Object can hold any number of properties
 
@@ -245,8 +246,8 @@ let j='';
 for(let i=0; i<3; i++)
 {
     j = j + (i).toString();
-    console.log(j);
-    showMessage(j); //Returns 012 - Loops executes 3 times and it came out of the loop when i becomes 3 and condition fails
+    console.log(typeof(j)); //Retuns string thrice
+    showMessage(j); //Returns 012 - Loop gets executed 3 times and stops loop execution when it fails the condition
 }
 
 console.log("While loop starts");
@@ -278,10 +279,10 @@ function showMessage2(){
     console.log("Test Data");
 }
 
-//Function will be executed only when it is being called.
+//Functions will get executed only when it is called. Functions can be called any number of times.
 showMessage2(); //showMessage2 Function call
 showMessage2();
-//It has been called two times, the block will be executed twice
+//Here, It has been called two times, hence function block has been executed twice
 
 //Function Expression - Another way to declare function and assign to variable
 let fn = function(){
@@ -300,17 +301,18 @@ let fn2 = function fncall(){
 }
 
 fn2();
-//fncall(); //We cannot call using function name. It will throw an error. fncall is not defined. Named only for debugging purpose
+//fncall(); //We cannot call using function name since it is declared to an variable. It will throw an error "fncall is not defined". It is used only for debugging purpose
 
 //Passing Information to Function - Function Parameters
 
-let fn3 = function fnparameter(message){ //Here, message is a local variable. Can be accessed only within the function
-    showMessage(message);
-    console.log(message);
+let fn3 = function fnparameter(message10){ //Here, message is a local variable. Can be accessed only within the function
+    showMessage(message10);
+    console.log(message10);
 }
 
 fn3("Function call 3");
 fn3('Function call 4'); //Data is passed as message through the parameter
+//console.log(message10);  //Throw an error "cant find variable message10" since it is an local variable
 
 let fn4 = function multipleparameter(message1, message2){
     console.log(message1, message2);
@@ -350,13 +352,14 @@ let key2 = 40;
 function getSecretCode(value){
 
     let keyGenerator = function(){
-        let key = 12;
-        console.log('in key generator', key); //Here Key will be 12
-        return key;
+        let key2 = 12;
+        console.log('in key generator', key2); //Here Key will be 12
+        return key2;
     }
 
     let code = value * keyGenerator(); //Here value * 12 will be returned and stored in code
-    console.log('in getSecretCode ', key); //Once it came out the function, now key will be taken from global variable ie) 40
+    console.log(code,value);
+    console.log('in getSecretCode ', key2); //Once it came out the function, now key will be taken from global variable ie) 40
     return code;
 
 }
