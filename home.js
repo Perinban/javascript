@@ -293,6 +293,15 @@ let fn = function(){
 fn(); //Function call
 fn();
 
+//Arrow function
+
+//It should be started with name always and => is called as arrow
+let arrowFn = () => {
+    console.log("Arrow Function call");
+}
+
+arrowFn(); //Function call
+
 //It is best practice to always give a function a name - it will used incase of errors
 
 let fn2 = function fncall(){
@@ -325,6 +334,14 @@ fn4(null,'Test Data 2'); //Anything concatenated with the string will return dat
 fn4(); //If both parameters were not given, will get undefined for both -> Concatenating both the undefined will return as number
 
 //Return Value from Function - It is not mandatory that always function return a value
+
+//Return value with Arrow function
+
+let arrowFn2 = (message) => {
+    console.log(message);
+}
+
+arrowFn2('Message'); //Passed parameter for arrow function
 
 let key = 42;
 
@@ -385,6 +402,8 @@ showMessage(person3.name);//Accessing a object
 
 showMessage(person3.country); //If we try to access the property which does not exist in object, it will return undefined
 console.log(person3.country); //Returns Undefined
+
+console.log(person3['flag']); //Another way to access an object
 
 //Changing a property value in the Object
 
@@ -1210,14 +1229,23 @@ let person8 = {
     fullName : function(){
         console.log(this.toString()); //Returns Object Object since it is an Object Literal
         return this.firstName + ' ' + this.lastName;
+    },
+    fullName2 : () => {
+        return 'Perinban Parameshwaran';
+    },
+    fullName3 : () => {
+        return this.firstName + ' ' + this.lastName;
     }
 }
 
 //Here this is the Person Object Literal
 //Object Literal is a comma separated list of name-value pairs inside of curly braces
 //Those values can be properties or functions.
+//This keyword does not work with arrow fuction
 
 console.log(person8.fullName() + " Person 8"); //Prints Full Name of the Function
+console.log(person8.fullName2()); // Print Full Name of function created using arrow function
+console.log(person8.fullName3()); // Returns undefined undefined
 
 //Constructor Function
 
@@ -1446,7 +1474,7 @@ console.log(diff[0].productID); //Returns 0
 //Since objects work like pointers, any changes made to the Objects affect the original value and original value will be lost completely
 //Only the changed value will be stored as a new value
 
-//Concatenate two arrays
+//Concatenate two arrays    
 
 let arr4 = [0,1,2,3,4];
 
